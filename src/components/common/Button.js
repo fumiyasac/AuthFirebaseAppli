@@ -12,12 +12,11 @@ import { Text, TouchableOpacity } from 'react-native';
  * → props.childrenとする場合には中身のタグごと取得する場合
  */
 const Button = ({ onPress, children }) => {
-  const { buttonStyle, textStyle } = styles;
 
   //表示する要素を返す
   return (
-    <TouchableOpacity onPress={onPress} style={buttonStyle}>
-      <Text style={textStyle}>
+    <TouchableOpacity onPress={onPress} style={styles.buttonStyle}>
+      <Text style={styles.textStyle}>
         {children}
       </Text>
     </TouchableOpacity>

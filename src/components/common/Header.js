@@ -9,13 +9,10 @@ import { Text, View } from 'react-native';
 //引数propsでタイトル名を表示するように定義する
 const Header = (props) => {
 
-  //それぞれのStyle属性を分割して表示する
-  const { textStyle, viewStyle } = styles;
-
   //表示する要素を返す
   return (
-    <View style={viewStyle}>
-      <Text style={textStyle}>{props.headerText}</Text>
+    <View style={styles.viewStyle}>
+      <Text style={styles.textStyle}>{props.headerText}</Text>
     </View>
   );
 };

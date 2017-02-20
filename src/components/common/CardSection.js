@@ -13,14 +13,9 @@ import { View } from 'react-native';
  */
 const CardSection = (props) => {
 
-  //各スタイルの適用のために分割する
-  const {
-    containerStyle
-  } = styles;
-
   //表示する要素を返す
   return (
-    <View style={containerStyle}>
+    <View style={styles.containerStyle}>
       {props.children}
     </View>
   );

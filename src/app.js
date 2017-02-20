@@ -3,11 +3,17 @@
  */
 import React, { Component } from 'react';
 import { View } from 'react-native';
+
+//index.jsに設定した共通部品に関するインポート宣言を行う
 import { Header } from './components/common';
 
 //firebaseのインポート宣言を行う
 import firebase from 'firebase';
 
+//LoginFormのインポート宣言を行う（今回の自作コンポーネント）
+import LoginForm from './components/LoginForm';
+
+//アプリ部分のUIの組み立てを行う
 class App extends Component {
 
   //コンポーネントの内容がMountされる前に行う処理
@@ -28,6 +34,7 @@ class App extends Component {
     return (
       <View>
         <Header headerText="Authentication" />
+        <LoginForm />
       </View>
     );
   }
