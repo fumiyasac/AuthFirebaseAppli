@@ -1,8 +1,11 @@
 /**
- * ログイン用のフォーム部分に
+ * ログイン用のフォーム部分のコンポーネント
  */
 import React, { Component } from 'react';
 import { Text } from 'react-native';
+
+//firebaseのインポート宣言を行う
+import firebase from 'firebase';
 
 //LoginFormの作成に必要な自作コンポーネント群のインポート宣言を行う
 import { Button, Card, CardSection, Input, Spinner } from './common';
@@ -15,17 +18,33 @@ class LoginForm extends Component {
 
   //ボタン押下時に実行されるメソッド
   onButtonPress() {
-    //TODO: 中の処理を組み立てる
+
+    //ステートからメールアドレスとパスワードを取得する
+    const { email, password } = this.state;
+
+    this.setState({ error: '', loading: true });
+
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(this.onLoginSuccess.bind(this))
+      .catch(() => {
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+          .then(this.onLoginSuccess.bind(this))
+          .catch(this.onLoginFail.bind(this));
+      });
   }
 
   //ログイン処理に失敗した場合に実行されるメソッド
   onLoginFail() {
-    //TODO: 中の処理を組み立てる
+
+    //ステート内の値を更新する
+    this.setState({ error: '認証に失敗しました。', loading: false });
   }
 
   //ログイン処理に成功した場合に実行されるメソッド
   onLoginSuccess() {
-    //TODO: 中の処理を組み立てる
+
+    //ステート内の値を更新する
+    this.setState({ email: '', password: '', error: '', loading: false });
   }
 
   //現在の実行状態と紐づいたボタンのレンダリングを行うメソッド
@@ -39,7 +58,7 @@ class LoginForm extends Component {
 
     return (
       <Button onPress={this.onButtonPress.bind(this)}>
-        Log in
+        ログイン＆サインアップ
       </Button>
     );
   }
@@ -60,7 +79,7 @@ class LoginForm extends Component {
           }
           <Input
             placeholder="user@gmail.com"
-            label="Email"
+            label="メールアドレス"
             value={this.state.email}
             onChangeText={ email => this.setState({ email }) }
           />
@@ -79,7 +98,7 @@ class LoginForm extends Component {
           <Input
             secureTextEntry
             placeholder="password"
-            label="Password"
+            label="パスワード"
             value={this.state.password}
             onChangeText={ password => this.setState({ password }) }
           />
@@ -104,7 +123,7 @@ class LoginForm extends Component {
 //このコンポーネントのStyle定義
 const styles = {
   errorTextStyle: {
-    fontSize: 20,
+    fontSize: 16,
     alignSelf: 'center',
     color: 'red'
   }
