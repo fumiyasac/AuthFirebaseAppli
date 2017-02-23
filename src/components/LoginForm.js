@@ -22,8 +22,16 @@ class LoginForm extends Component {
     //ステートからメールアドレスとパスワードを取得する
     const { email, password } = this.state;
 
+    //ステートの状態を変更する ※loadingをtrueに変更してスピナー表示をする
     this.setState({ error: '', loading: true });
 
+    //firebaseへの認証を行う
+    //サインイン用のfirebaseのメソッドauth().signInWithEmailAndPassword(email, password)を利用する
+    // → then内のログイン認証処理を実行(ログイン処理を実行する) ※エラーの際にはcatch以下の処理を実行する
+    // → ログイン処理に失敗した場合はアカウント作成を行いログイン状態にする ※エラーの際にはcatch以下の処理を実行する
+    //
+    // (参考)今更だけどPromise入門
+    // http://qiita.com/koki_cheese/items/c559da338a3d307c9d88
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(this.onLoginSuccess.bind(this))
       .catch(() => {
